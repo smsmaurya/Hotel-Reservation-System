@@ -25,9 +25,9 @@ public class HotelReservationSystem {
 
         HotelReservationSystem hrs = new HotelReservationSystem();
 
-        Hotel lakewood = new Hotel("Lakewood", 110, 90);
-        Hotel bridgewood = new Hotel("Bridgewood", 150, 50);
-        Hotel ridgewood = new Hotel("Ridgewood", 220, 150);
+        Hotel lakewood = new Hotel("Lakewood", 110, 90,3);
+        Hotel bridgewood = new Hotel("Bridgewood", 150, 50,4);
+        Hotel ridgewood = new Hotel("Ridgewood", 220, 150,5);
 
         hrs.addHotel(lakewood);
         hrs.addHotel(bridgewood);
@@ -39,6 +39,6 @@ public class HotelReservationSystem {
         Hotel cheapestHotel = hrs.findCheapestHotel(startDate, endDate);
         int totalRate = cheapestHotel.calculateTotalRate(startDate, endDate);
 
-        System.out.println("Cheapest Hotel: " + cheapestHotel.hotelName + ", Total Rates: $" + totalRate);
+        System.out.println("Cheapest Hotel: " + cheapestHotel.hotelName + ""+" Total Rates: $" + totalRate);
     }
 }
