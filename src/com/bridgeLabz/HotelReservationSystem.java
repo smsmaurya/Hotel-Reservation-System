@@ -57,9 +57,9 @@ public class HotelReservationSystem {
 
         HotelReservationSystem hrs = new HotelReservationSystem();
 
-        Hotel lakewood = new Hotel("Lakewood", 110, 90,3);
-        Hotel bridgewood = new Hotel("Bridgewood", 150, 50,4);
-        Hotel ridgewood = new Hotel("Ridgewood", 220, 150,5);
+        Hotel lakewood = new Hotel("Lakewood", 110, 90, 80, 80, 3);
+        Hotel bridgewood = new Hotel("Bridgewood", 150, 50, 60, 50, 4);
+        Hotel ridgewood = new Hotel("Ridgewood", 220, 150, 150, 40, 5);
 
         hrs.addHotel(lakewood);
         hrs.addHotel(bridgewood);
@@ -83,7 +83,7 @@ public class HotelReservationSystem {
 
         //find best rated hotel from given date range
         Hotel bestRatedHotel = hrs.findBestRatedHotel(startDate, endDate);
-        System.out.println("Best Rated Hotel: " + bestRatedHotel.hotelName + ", Rating: " + bestRatedHotel.rating);
+        System.out.println("Best Rated Hotel: " + bestRatedHotel.hotelName + ", Rating: " + bestRatedHotel.rating+", Total rate :"+bestRatedHotel.calculateTotalRate(startDate,endDate));
 
     }
 }

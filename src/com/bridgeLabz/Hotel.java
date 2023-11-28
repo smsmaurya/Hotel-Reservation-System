@@ -5,12 +5,14 @@ import java.time.LocalDate;
 
 public class Hotel {
     String hotelName;
-    int weekdayRateForRegularCustomer,weekendRateForRegularCustomer,rating;
+    int weekdayRateForRegularCustomer,weekendRateForRegularCustomer, weekdayRateForRewardCustomer,weekendRateForRewardCustomer, rating;
 
-    public Hotel(String hotelName, int weekdayRateForRegularCustomer,int weekendRateForRegularCustomer, int rating) {
+    public Hotel(String hotelName, int weekdayRateForRegularCustomer,int weekendRateForRegularCustomer, int rating,int weekdayRateForRewardCustomer,int weekendRateForRewardCustomer) {
         this.hotelName = hotelName;
         this.weekdayRateForRegularCustomer = weekdayRateForRegularCustomer;
         this.weekendRateForRegularCustomer = weekendRateForRegularCustomer;
+        this.weekdayRateForRewardCustomer = weekdayRateForRewardCustomer;
+        this.weekendRateForRewardCustomer = weekendRateForRewardCustomer;
         this.rating = rating;
     }
 
@@ -18,15 +20,16 @@ public class Hotel {
     public String toString() {
         return "Hotel{" +
                 "hotelName='" + hotelName + '\'' +
-                "rating='" + rating + '\'' +
                 ", weekdayRegularCustomer=" + weekdayRateForRegularCustomer + '\'' +
-                ", weekendRegularCustomer=" + weekendRateForRegularCustomer +
+                ", weekendRegularCustomer=" + weekendRateForRegularCustomer +'\'' +
+                ", weekdayRewardCustomer="+ weekdayRateForRewardCustomer+'\'' +
+                ", weekendRewardCustomer="+ weekendRateForRewardCustomer+ '\'' +
+                ", rating='" + rating +
                 '}';
     }
 
     public int calculateTotalRate(LocalDate startDate, LocalDate endDate) {
         int totalRate = 0;
-
         while (!startDate.isAfter(endDate)) {
             if (startDate.getDayOfWeek() == DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 totalRate += weekendRateForRegularCustomer;
@@ -35,10 +38,6 @@ public class Hotel {
             }
             startDate = startDate.plusDays(1);
         }
-
         return totalRate;
     }
-
-
-
 }
