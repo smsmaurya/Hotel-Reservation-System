@@ -11,13 +11,39 @@ public class HotelReservationSystem {
         hotelList.add(hotel);
     }
 
+    // task -> show only single cheap hotel
     public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate) {
-        /*String hotels =hotelList.stream()
-                .min(Comparator.comparingInt(hotel -> hotel.calculateTotalRate(startDate, endDate)))
-                .orElse(null).hotelName;*//*task - to show all hotels name which are cheap rate*/
         return hotelList.stream()
                 .min(Comparator.comparingInt(hotel -> hotel.calculateTotalRate(startDate, endDate)))
                 .orElse(null);
+    }
+
+    /*task - to show all hotels name which are cheap rate*/
+    public ArrayList<Hotel> findCheapestHotels(LocalDate startDate, LocalDate endDate) {
+        ArrayList<Hotel> cheapestHotelsList = new ArrayList<>();
+
+        int minTotalCheapRate = Integer.MAX_VALUE;
+
+        for (Hotel hotel : hotelList) {
+            int totalRate = hotel.calculateTotalRate(startDate, endDate);
+            if (totalRate < minTotalCheapRate) {
+                minTotalCheapRate = totalRate;
+                cheapestHotelsList.removeAll(cheapestHotelsList);// removeAll() method of list is used to delete all data from the list
+                cheapestHotelsList.add(hotel);
+            } else if (totalRate == minTotalCheapRate) {
+                cheapestHotelsList.add(hotel);
+            }
+        }
+        return cheapestHotelsList;
+    }
+
+    public void hotelName(LocalDate startDate, LocalDate endDate,int cheapRate){
+        ArrayList<Hotel> sastaHotel = findCheapestHotels(startDate, endDate);
+        int maxHotelRating = sastaHotel.stream().mapToInt(hotel -> hotel.rating).max().orElse(Integer.MIN_VALUE);
+        for (Hotel hotel: sastaHotel){
+            if(hotel.rating==maxHotelRating)
+                System.out.println(hotel.hotelName+", Rating: "+hotel.rating+" and Total Rates: $"+cheapRate);
+        }
     }
 
     public static void main(String[] args) {
@@ -33,12 +59,18 @@ public class HotelReservationSystem {
         hrs.addHotel(bridgewood);
         hrs.addHotel(ridgewood);
 
+        //local date and time format use to convert string to local date
         LocalDate startDate = LocalDate.parse("2023-11-25", DateTimeFormatter.ISO_LOCAL_DATE);
         LocalDate endDate = LocalDate.parse("2023-11-28", DateTimeFormatter.ISO_LOCAL_DATE);
 
         Hotel cheapestHotel = hrs.findCheapestHotel(startDate, endDate);
-        int totalRate = cheapestHotel.calculateTotalRate(startDate, endDate);
-
-        System.out.println("Cheapest Hotel: " + cheapestHotel.hotelName + ""+" Total Rates: $" + totalRate);
+        ArrayList<Hotel> sastaHotal = hrs.findCheapestHotels(startDate,endDate);
+        int cheapRate = cheapestHotel.calculateTotalRate(startDate, endDate);
+        hrs.hotelName(startDate,endDate,cheapRate);
+        /*System.out.print("Cheapest Hotels are : ");
+        for (Hotel cheapHotel:sastaHotal){
+            System.out.print(cheapHotel.hotelName+", ");
+        }
+        System.out.print("Total rate :$"+cheapRate);*/
     }
 }
