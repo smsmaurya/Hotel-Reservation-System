@@ -37,13 +37,19 @@ public class HotelReservationSystem {
         return cheapestHotelsList;
     }
 
-    public void hotelName(LocalDate startDate, LocalDate endDate,int cheapRate){
+    public void findCheapWithBestRatedHotelName(LocalDate startDate, LocalDate endDate,int cheapRate){
         ArrayList<Hotel> sastaHotel = findCheapestHotels(startDate, endDate);
         int maxHotelRating = sastaHotel.stream().mapToInt(hotel -> hotel.rating).max().orElse(Integer.MIN_VALUE);
         for (Hotel hotel: sastaHotel){
             if(hotel.rating==maxHotelRating)
                 System.out.println(hotel.hotelName+", Rating: "+hotel.rating+" and Total Rates: $"+cheapRate);
         }
+    }
+
+    public Hotel findBestRatedHotel(LocalDate startDate, LocalDate endDate) {
+        return hotelList.stream()
+                .max(Comparator.comparingInt(hotel -> hotel.rating))
+                .orElse(null);
     }
 
     public static void main(String[] args) {
@@ -66,11 +72,18 @@ public class HotelReservationSystem {
         Hotel cheapestHotel = hrs.findCheapestHotel(startDate, endDate);
         ArrayList<Hotel> sastaHotal = hrs.findCheapestHotels(startDate,endDate);
         int cheapRate = cheapestHotel.calculateTotalRate(startDate, endDate);
-        hrs.hotelName(startDate,endDate,cheapRate);
-        /*System.out.print("Cheapest Hotels are : ");
+                System.out.print("Cheapest Hotels are : ");
         for (Hotel cheapHotel:sastaHotal){
             System.out.print(cheapHotel.hotelName+", ");
         }
-        System.out.print("Total rate :$"+cheapRate);*/
+        System.out.print("Total rate :$"+cheapRate+"\n");
+
+        //find cheap price and best rated hotel in given date range
+        hrs.findCheapWithBestRatedHotelName(startDate,endDate,cheapRate);
+
+        //find best rated hotel from given date range
+        Hotel bestRatedHotel = hrs.findBestRatedHotel(startDate, endDate);
+        System.out.println("Best Rated Hotel: " + bestRatedHotel.hotelName + ", Rating: " + bestRatedHotel.rating);
+
     }
 }
