@@ -12,6 +12,9 @@ public class HotelReservationSystem {
     }
 
     public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate) {
+        /*String hotels =hotelList.stream()
+                .min(Comparator.comparingInt(hotel -> hotel.calculateTotalRate(startDate, endDate)))
+                .orElse(null).hotelName;*//*task - to show all hotels name which are cheap rate*/
         return hotelList.stream()
                 .min(Comparator.comparingInt(hotel -> hotel.calculateTotalRate(startDate, endDate)))
                 .orElse(null);
@@ -31,7 +34,7 @@ public class HotelReservationSystem {
         hrs.addHotel(ridgewood);
 
         LocalDate startDate = LocalDate.parse("2023-11-25", DateTimeFormatter.ISO_LOCAL_DATE);
-        LocalDate endDate = LocalDate.parse("2023-11-27", DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate endDate = LocalDate.parse("2023-11-28", DateTimeFormatter.ISO_LOCAL_DATE);
 
         Hotel cheapestHotel = hrs.findCheapestHotel(startDate, endDate);
         int totalRate = cheapestHotel.calculateTotalRate(startDate, endDate);
