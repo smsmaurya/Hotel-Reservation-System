@@ -18,6 +18,12 @@ public class HotelReservationSystem {
                 .orElse(null);
     }
 
+    public Hotel findBestRatedHotel() {
+        return hotelList.stream()
+                .max(Comparator.comparingInt(hotel -> hotel.rating))
+                .orElse(null);
+    }
+
     /*task - to show all hotels name which are cheap rate*/
     public ArrayList<Hotel> findCheapestHotels(LocalDate startDate, LocalDate endDate,String customerType) {
         ArrayList<Hotel> cheapestHotelsList = new ArrayList<>();
@@ -45,12 +51,6 @@ public class HotelReservationSystem {
             if(hotel.rating==maxHotelRating)
                 System.out.println(hotel.hotelName+", Rating: "+hotel.rating+" and Total Rates: $"+cheapRate);
         }
-    }
-
-    public Hotel findBestRatedHotel() {
-        return hotelList.stream()
-                .max(Comparator.comparingInt(hotel -> hotel.rating))
-                .orElse(null);
     }
 
     public static void main(String[] args) {
